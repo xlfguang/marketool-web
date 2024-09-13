@@ -7,9 +7,9 @@ const PrivateRoute = ({ Element }: { Element: JSX.Element }): JSX.Element => {
   const token = localStorage.getItem("token");
   useEffect(() => {
     return (): void => {
-      if (!token && location.pathname !== "/login") {
-        navigate("/login");
-      }
+      // if (!token && location.pathname !== "/login") {
+      //   navigate("/login");
+      // }
     };
   }, [navigate, location.pathname]);
   return <>{Element}</>;
