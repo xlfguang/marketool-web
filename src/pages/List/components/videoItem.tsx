@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Caption,
   Cover,
@@ -9,8 +9,15 @@ import {
   OperateButtonBox,
   OperateButtonImg,
   ParametersForm,
+  ParametersFormBottom,
+  ParametersFormButton,
+  ParametersFormButtonBox,
+  ParametersFormCheck,
+  ParametersFormCheckBox,
+  ParametersFormCheckLabel,
   ParametersInputBox,
   ParametersInputTitle,
+  PlayIcon,
   Title,
   VideoItemBox,
   VideoItemCaption,
@@ -19,14 +26,19 @@ import {
   VideoItemContentRight,
   VideoItemDescription,
   VideoItemImg,
+  VideoItemImgBox,
   VideoItemOperate,
 } from "../style";
 import downloadIcon from "@/assets/images/Download.png";
 import synthesisIcon from "@/assets/images/synthesis.png";
 import alterIcon from "@/assets/images/alter.png";
 import deleteIcon from "@/assets/images/delete.png";
+import playIcon from "@/assets/images/play-icon.png";
+import { VideoListItem } from "@/api/type";
+import { changeVideoApi, synthesisVideoApi } from "@/api/apis";
+
 interface VideoItemProps {
-  video: string;
+  video: VideoListItem;
 }
 const OperateButton = (props: {
   icon: string;
@@ -48,7 +60,9 @@ const ParametersInput = (props: {
   title: string;
   type: "input" | "textarea";
   value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onInput: (
+    e: React.FormEvent<HTMLInputElement> | React.FormEvent<HTMLTextAreaElement>
+  ) => void;
   disabled?: boolean;
 }) => {
   return (
@@ -58,13 +72,13 @@ const ParametersInput = (props: {
         <MyInput
           type="text"
           value={props.value}
-          onChange={props.onChange}
+          onInput={props.onInput}
           disabled={props.disabled}
         />
       ) : (
         <MyTextArea
           value={props.value}
-          onChange={props.onChange}
+          onInput={props.onInput}
           disabled={props.disabled}
         />
       )}
@@ -72,35 +86,89 @@ const ParametersInput = (props: {
   );
 };
 function VideoItem(props: VideoItemProps) {
-  const [formShow, setFormShow] = React.useState(false);
-  const [activeBtn, setActiveBtn] = React.useState("");
-  const download = () => {};
-  const synthesis = () => {};
+  const [formShow, setFormShow] = useState(false);
+  const [activeBtn, setActiveBtn] = useState("");
+  const video = props.video;
+
+  const [title, setTitle] = useState(video.title);
+  const [subtitle, setSubtitle] = useState(video.subtitle);
+  const [description, setDescription] = useState(video.description);
+  const [tag, setTag] = useState(video.tag);
+  const download = async () => {
+    const response = await fetch(video.videoUrl);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch video: ${response.statusText}`);
+    }
+    const blob = await response.blob(); // 获取视频文件的blob数据
+    const url = window.URL.createObjectURL(blob); // 创建本地URL
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${video.title}.mp4`; // 指定下载文件名
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url); // 释放URL
+  };
+  const synthesis = async () => {
+    const res = await synthesisVideoApi({
+      ...video,
+      title: title,
+      subtitle: subtitle,
+      description: description,
+      tag: tag,
+    });
+    if (res.code === 0) {
+      setFormShow(false);
+    } else {
+      alert(res.msg);
+    }
+  };
   const alter = () => {
     setFormShow(true);
     setActiveBtn("alter");
   };
   const deleteVideo = () => {};
+
+  const save = async (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
+    const res = await changeVideoApi({
+      ...video,
+      title: title,
+      subtitle: subtitle,
+      description: description,
+      tag: tag,
+    });
+    if (res.code === 0) {
+      setFormShow(false);
+    } else {
+      alert(res.msg);
+    }
+  };
+  const cloneForm = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
+    setFormShow(false);
+  };
+
   return (
     <VideoItemBox>
       <Title>标题：超值福利来了！热销商品限时优惠等你来拿，惊喜不断</Title>
       <VideoItemContentBox>
         <VideoItemContent>
-          <VideoItemImg src="https://img.zcool.cn/community/012bb55ede4f33a801215aa04fd218.jpg" />
+          <VideoItemImgBox>
+            <VideoItemImg src={video.cover_url} />
+            <PlayIcon src={playIcon} />
+          </VideoItemImgBox>
           <VideoItemContentRight>
             <Introduce>
               <VideoItemDescription>
-                描述：该片改编自亚利桑德罗·巴里克文学剧本《1900：独白》，讲述了一个被命名为“1900”的弃婴在一艘远洋客轮上与钢琴结缘，成为钢琴大师的传奇故事。
+                描述：{video.description || "暂无描述"}
               </VideoItemDescription>
               <VideoItemCaption>
-                标签：#牛奶直播#酒#自营产品#牛奶直播#酒#自营产品#牛奶直播#酒#自营产品#牛奶直播#酒#自营产品
+                标签：{video.tag || "暂无标签"}
               </VideoItemCaption>
             </Introduce>
             <Line />
-            <Caption>
-              字幕：00:00:00,000 -- 00:00:20,000 m 38 -1 l 44 6 l 38 13 l 19 13
-              b 14 12 14 6 14 6 b 14 6 14 0 19 -1
-            </Caption>
+            <Caption>字幕：{video.subtitle || "暂无字幕"}</Caption>
           </VideoItemContentRight>
           {formShow && (
             <Cover
@@ -134,27 +202,49 @@ function VideoItem(props: VideoItemProps) {
                 <ParametersInput
                   title="标题"
                   type="input"
-                  value=""
-                  onChange={() => {}}
+                  value={title}
+                  onInput={(e) => {
+                    setTitle((e.target as HTMLInputElement).value);
+                  }}
                 />
                 <ParametersInput
                   title="字幕"
                   type="textarea"
-                  value=""
-                  onChange={() => {}}
+                  value={subtitle}
+                  onInput={(e) =>
+                    setSubtitle((e.target as HTMLInputElement).value)
+                  }
                 />
                 <ParametersInput
                   title="社交媒体描述"
                   type="input"
-                  value=""
-                  onChange={() => {}}
+                  value={description}
+                  onInput={(e) =>
+                    setDescription((e.target as HTMLInputElement).value)
+                  }
                 />
                 <ParametersInput
                   title="社交媒体标签"
                   type="input"
-                  value=""
-                  onChange={() => {}}
+                  value={tag}
+                  onInput={(e) => setTag((e.target as HTMLInputElement).value)}
                 />
+                <ParametersFormBottom>
+                  <ParametersFormCheckBox>
+                    <ParametersFormCheck type="checkbox" />
+                    <ParametersFormCheckLabel>
+                      是否同步更新到社交媒体
+                    </ParametersFormCheckLabel>
+                  </ParametersFormCheckBox>
+                  <ParametersFormButtonBox>
+                    <ParametersFormButton type="submit" onClick={save}>
+                      保存
+                    </ParametersFormButton>
+                    <ParametersFormButton type="button" onClick={cloneForm}>
+                      取消
+                    </ParametersFormButton>
+                  </ParametersFormButtonBox>
+                </ParametersFormBottom>
               </ParametersForm>
             )}
           </OperateButton>

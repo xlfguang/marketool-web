@@ -7,6 +7,7 @@ export const VideoList = styled.div`
 `;
 export const VideoItemBox = styled.div`
   width: 100%;
+  margin-bottom: 40px;
   @media (max-width: 768px) {
     padding: 0 10px;
   }
@@ -39,6 +40,12 @@ export const VideoItemContent = styled.div`
     width: 100%;
   }
 `;
+export const VideoItemImgBox = styled.div`
+  position: relative;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`;
 export const VideoItemImg = styled.img`
   width: 313px;
   height: 698px;
@@ -48,6 +55,17 @@ export const VideoItemImg = styled.img`
     height: auto;
   }
 `;
+export const PlayIcon = styled.img`
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  cursor: pointer;
+`;
+
 export const VideoItemContentRight = styled.div``;
 export const Introduce = styled.div`
   padding: 22px 20px 50px;
@@ -74,12 +92,27 @@ export const VideoItemDescription = styled.div`
 `;
 export const VideoItemCaption = styled.div``;
 export const Caption = styled.div`
+  height: calc(698px - 178px);
   padding: 22px 20px 50px;
   font-size: 18px;
   font-weight: 400;
   line-height: 23.94px;
   text-align: left;
   color: #a5a5a5;
+  white-space: pre-line;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #c1c1c1;
+    border-radius: 3px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+  }
+
   @media (max-width: 768px) {
     font-size: 16px;
   }
@@ -148,7 +181,7 @@ export const ParametersForm = styled.div`
   position: absolute;
   background: #fff;
   width: 1008px;
-  height: 539px;
+  height: 557px;
   border-radius: 10px;
   padding: 24px;
   z-index: 3;
@@ -190,4 +223,70 @@ export const MyTextArea = styled.textarea`
   border-radius: 4px;
   border: 1px solid #dfdfdf;
   resize: none;
+  box-sizing: border-box;
+`;
+export const LoadingPrompts = styled.div`
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  font-size: 18px;
+  font-weight: 400;
+  color: #130808;
+`;
+export const ParametersFormBottom = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+export const ParametersFormCheckBox = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const ParametersFormCheck = styled.input`
+  width: 22px;
+  height: 22px;
+  position: relative;
+  margin-right: 8px;
+  &::after {
+    position: absolute;
+    top: 0;
+    color: #000;
+    width: 22px;
+    height: 22px;
+    display: inline-block;
+    visibility: visible;
+    padding-left: 0px;
+    text-align: center;
+    content: " ";
+    border-radius: 3px;
+  }
+  &:checked::after {
+    content: "✓";
+    color: #fff;
+    font-size: 10px;
+    line-height: 22px;
+    background-color: #ff5334;
+  }
+`;
+export const ParametersFormCheckLabel = styled.span`
+  font-size: 16px;
+  font-weight: 400;
+  color: #ff5334;
+`;
+export const ParametersFormButtonBox = styled.div`
+  display: flex;
+  gap: 20px;
+`;
+export const ParametersFormButton = styled.div<{
+  type: "submit" | "button";
+}>`
+  padding: 10px 18px;
+  border-radius: 6px;
+  background: ${(props) => (props.type === "submit" ? "#ff5334" : "#fff")};
+  border: 1px solid
+    ${(props) => (props.type === "submit" ? "#ff5334" : "#A5A5A5")};
+  color: ${(props) => (props.type === "submit" ? "#fff" : "#A5A5A5")};
+  cursor: pointer;
 `;

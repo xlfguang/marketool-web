@@ -9,4 +9,13 @@ export default defineConfig({
       "@": join(__dirname, "src"),
     },
   },
+  server: {
+    proxy: {
+      "/api": {
+        target: "https://aimarketool-fc.douwantech.com",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, "/api"),
+      },
+    }
+  }
 })

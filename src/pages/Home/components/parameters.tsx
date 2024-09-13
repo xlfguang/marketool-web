@@ -118,7 +118,7 @@ function AdvancedParameters(props: ParametersProps) {
             }}
           />
           <ParametersInput
-            title="标题Y轴"
+            title="标题Y轴间距"
             value={props.parameters.titleY}
             onChange={(e) => {
               props.setParameters({
@@ -128,7 +128,7 @@ function AdvancedParameters(props: ParametersProps) {
             }}
           />
           <ParametersInput
-            title="标题颜色"
+            title="标题字体颜色"
             value={props.parameters.titleColor}
             onChange={(e) => {
               props.setParameters({
@@ -148,7 +148,7 @@ function AdvancedParameters(props: ParametersProps) {
             }}
           />
           <ParametersInput
-            title="副标题字体大小"
+            title="字幕字体大小"
             value={props.parameters.subtitleFontSize}
             onChange={(e) => {
               props.setParameters({
@@ -158,7 +158,7 @@ function AdvancedParameters(props: ParametersProps) {
             }}
           />
           <ParametersInput
-            title="副标题行高"
+            title="字幕间距"
             value={props.parameters.subtitleLineHeight}
             onChange={(e) => {
               props.setParameters({
@@ -168,7 +168,7 @@ function AdvancedParameters(props: ParametersProps) {
             }}
           />
           <ParametersInput
-            title="副标题颜色"
+            title="字幕字体主题色"
             value={props.parameters.subtitleColor}
             onChange={(e) => {
               props.setParameters({
@@ -178,7 +178,7 @@ function AdvancedParameters(props: ParametersProps) {
             }}
           />
           <ParametersInput
-            title="副标题边框颜色"
+            title="字幕字体边框颜色"
             value={props.parameters.subtitleBorderColor}
             onChange={(e) => {
               props.setParameters({
@@ -188,7 +188,7 @@ function AdvancedParameters(props: ParametersProps) {
             }}
           />
           <ParametersInput
-            title="副标题背景颜色"
+            title="字幕字体背景颜色"
             value={props.parameters.subtitleBgColor}
             onChange={(e) => {
               props.setParameters({

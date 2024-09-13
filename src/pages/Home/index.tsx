@@ -1,5 +1,5 @@
 import Main from "@/components/main";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   CreateVideoBox,
   CreateVideoButton,
@@ -15,59 +15,37 @@ import lickIcon from "@/assets/images/Link-icon.png";
 import uploadIcon from "@/assets/images/Upload-icon.png";
 import VideoItem from "./components/videoItem";
 import AdvancedParameters from "./components/parameters";
+import { getLongVideoListApi } from "@/api/apis";
+import { LongVideoListItem } from "@/api/type";
 function Index() {
   const [title, setTitle] = useState("");
   const [link, setLink] = useState("");
-  const [videoList, setVideoList] = useState([
-    {
-      title: "测试标题长度与",
-      link: "https://img.zcool.cn/community/012bb55ede4f33a801215aa04fd218.jpg",
-    },
-    {
-      title: "测试标题长度与",
-      link: "https://img.zcool.cn/community/012bb55ede4f33a801215aa04fd218.jpg",
-    },
-    {
-      title: "测试标题长度与",
-      link: "https://img.zcool.cn/community/012bb55ede4f33a801215aa04fd218.jpg",
-    },
-    {
-      title: "测试标题长度与",
-      link: "https://img.zcool.cn/community/012bb55ede4f33a801215aa04fd218.jpg",
-    },
-    {
-      title: "测试标题长度与",
-      link: "https://img.zcool.cn/community/012bb55ede4f33a801215aa04fd218.jpg",
-    },
-    {
-      title: "测试标题长度与",
-      link: "https://img.zcool.cn/community/012bb55ede4f33a801215aa04fd218.jpg",
-    },
-    {
-      title: "测试标题长度测试标题长度测试标题长度测试标题长度测试标题长度",
-      link: "https://img.zcool.cn/community/012bb55ede4f33a801215aa04fd218.jpg",
-    },
-    {
-      title: "测试标题长度与",
-      link: "https://img.zcool.cn/community/012bb55ede4f33a801215aa04fd218.jpg",
-    },
-    {
-      title: "测试标题长度与",
-      link: "https://img.zcool.cn/community/012bb55ede4f33a801215aa04fd218.jpg",
-    },
-  ]);
+  const [videoList, setVideoList] = useState<LongVideoListItem[]>([]);
   const [parameters, setParameters] = useState({
-    titleFontSize: "10",
-    titleLineHeight: "10",
-    titleY: "10",
-    titleColor: "#000",
-    titleBorderColor: "#000",
-    subtitleFontSize: "10",
-    subtitleLineHeight: "10",
-    subtitleColor: "#000",
-    subtitleBorderColor: "#000",
-    subtitleBgColor: "#000",
+    titleFontSize: "5",
+    titleLineHeight: "1.5",
+    titleY: "15",
+    titleColor: "#ffffff",
+    titleBorderColor: "#ff0000",
+    subtitleFontSize: "1.5",
+    subtitleLineHeight: "5",
+    subtitleColor: "&Hffffff",
+    subtitleBorderColor: "&H100000000",
+    subtitleBgColor: "&H80000000",
   });
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+
+  const getVideoList = async () => {
+    const res = await getLongVideoListApi({ page, pageSize });
+    console.log(res);
+    if (res.code === 0) {
+      setVideoList(res.data.list);
+    }
+  };
+  useEffect(() => {
+    getVideoList();
+  }, [page]);
   return (
     <Main>
       <MainLogo src={logo} alt="logo" />

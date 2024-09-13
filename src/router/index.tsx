@@ -8,12 +8,12 @@ const routes: Array<{
     element: JSX.Element;
   }>;
 }> = [
-  // {
-  //   path: "/",
-  //   element: <Home />,
-  // },
   {
     path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/list",
     element: <List />,
   },
 ];

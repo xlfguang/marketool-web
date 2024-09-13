@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import playIcon from "@/assets/images/play-icon.png";
+import { LongVideoListItem } from "@/api/type";
+import { useNavigate } from "react-router-dom";
 const VideoItemBox = styled.div`
   width: 176px;
   height: 360px;
@@ -17,6 +18,7 @@ const VideoItemCover = styled.div<{
   background: url(${(props) => props.cover}) no-repeat;
   background-size: cover;
   position: relative;
+  cursor: pointer;
 `;
 const VideoItemTitle = styled.div`
   font-size: 14px;
@@ -32,27 +34,23 @@ const VideoItemTitle = styled.div`
   text-align: left;
   color: #130808;
 `;
-const PlayIcon = styled.img`
-  position: absolute;
-  width: 48px;
-  height: 48px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
-  cursor: pointer;
-`;
-function VideoItem(props: {
-  videoInfo: {
-    title: string;
-    link: string;
+
+function VideoItem(props: { videoInfo: LongVideoListItem }) {
+  const navigate = useNavigate();
+  const goListPage = () => {
+    // 跳转到视频页
+    navigate("/list", {
+      state: {
+        id: props.videoInfo.ID,
+      },
+    });
   };
-}) {
   return (
     <VideoItemBox>
-      <VideoItemCover cover={props.videoInfo.link}>
-        <PlayIcon src={playIcon} alt="play" />
-      </VideoItemCover>
+      <VideoItemCover
+        cover={props.videoInfo.cover_url}
+        onClick={goListPage}
+      ></VideoItemCover>
       <VideoItemTitle>{props.videoInfo.title}</VideoItemTitle>
     </VideoItemBox>
   );
