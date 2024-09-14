@@ -93,3 +93,54 @@ export type ChangeVideoApiResult = {
   msg: string
 }
 export type ChangeVideoApi = (params: ChangeVideoApiParams) => Promise<ChangeVideoApiResult>
+
+export type UploadVideoApiParams = {
+  file: File
+}
+export type UploadVideoApiData = {
+  file: {
+    CreatedAt: string
+    ID: number
+    UpdatedAt: string
+    brand_id: number
+    duration: number
+    key: string
+    name: string
+    tag: string
+    url: string
+    user_id: number
+  }
+}
+export type UploadVideoApiResult = {
+  code: number
+  data: UploadVideoApiData
+  msg: string
+}
+export type UploadVideoApi = (params: UploadVideoApiParams) => Promise<UploadVideoApiResult>
+
+export type CreateLongVideoApiParams = {
+  back_colour: string
+  border_color: string
+  cover_url: string
+  create_type: string
+  font_color: string
+  font_size: number
+  line_space: number
+  mainVideo: string
+  main_video_ratio: number
+  margin_v: number
+  outline_colour: string
+  primary_colour: string
+  segment_duration: number
+  status: string
+  subtitle_font_size: number
+  title: string
+  y_align: number
+}
+
+export type CreateLongVideoApiResult = {
+  code: number
+  data: null
+  msg: string
+}
+export type CreateLongVideoApi = (params: CreateLongVideoApiParams) => Promise<CreateLongVideoApiResult>
