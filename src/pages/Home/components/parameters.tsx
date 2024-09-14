@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 interface Parameters {
-  titleFontSize: string;
-  titleLineHeight: string;
-  titleY: string;
-  titleColor: string;
-  titleBorderColor: string;
-  subtitleFontSize: string;
-  subtitleLineHeight: string;
-  subtitleColor: string;
-  subtitleBorderColor: string;
-  subtitleBgColor: string;
+  font_size: string;
+  line_space: string;
+  y_align: string;
+  font_color: string;
+  border_color: string;
+  subtitle_font_size: string;
+  margin_v: string;
+  primary_colour: string;
+  outline_colour: string;
+  back_colour: string;
 }
 interface ParametersProps {
   parameters: Parameters;
@@ -99,101 +99,101 @@ function AdvancedParameters(props: ParametersProps) {
         <ParametersForm>
           <ParametersInput
             title="标题字体大小"
-            value={props.parameters.titleFontSize}
+            value={props.parameters.font_size}
             onChange={(e) => {
               props.setParameters({
                 ...props.parameters,
-                titleFontSize: e.target.value,
+                font_size: e.target.value,
               });
             }}
           />
           <ParametersInput
             title="标题行高"
-            value={props.parameters.titleLineHeight}
+            value={props.parameters.line_space}
             onChange={(e) => {
               props.setParameters({
                 ...props.parameters,
-                titleLineHeight: e.target.value,
+                line_space: e.target.value,
               });
             }}
           />
           <ParametersInput
             title="标题Y轴间距"
-            value={props.parameters.titleY}
+            value={props.parameters.y_align}
             onChange={(e) => {
               props.setParameters({
                 ...props.parameters,
-                titleY: e.target.value,
+                y_align: e.target.value,
               });
             }}
           />
           <ParametersInput
             title="标题字体颜色"
-            value={props.parameters.titleColor}
+            value={props.parameters.font_color}
             onChange={(e) => {
               props.setParameters({
                 ...props.parameters,
-                titleColor: e.target.value,
+                font_color: e.target.value,
               });
             }}
           />
           <ParametersInput
             title="标题边框颜色"
-            value={props.parameters.titleBorderColor}
+            value={props.parameters.border_color}
             onChange={(e) => {
               props.setParameters({
                 ...props.parameters,
-                titleBorderColor: e.target.value,
+                border_color: e.target.value,
               });
             }}
           />
           <ParametersInput
             title="字幕字体大小"
-            value={props.parameters.subtitleFontSize}
+            value={props.parameters.subtitle_font_size}
             onChange={(e) => {
               props.setParameters({
                 ...props.parameters,
-                subtitleFontSize: e.target.value,
+                subtitle_font_size: e.target.value,
               });
             }}
           />
           <ParametersInput
             title="字幕间距"
-            value={props.parameters.subtitleLineHeight}
+            value={props.parameters.margin_v}
             onChange={(e) => {
               props.setParameters({
                 ...props.parameters,
-                subtitleLineHeight: e.target.value,
+                margin_v: e.target.value,
               });
             }}
           />
           <ParametersInput
             title="字幕字体主题色"
-            value={props.parameters.subtitleColor}
+            value={props.parameters.primary_colour}
             onChange={(e) => {
               props.setParameters({
                 ...props.parameters,
-                subtitleColor: e.target.value,
+                primary_colour: e.target.value,
               });
             }}
           />
           <ParametersInput
             title="字幕字体边框颜色"
-            value={props.parameters.subtitleBorderColor}
+            value={props.parameters.outline_colour}
             onChange={(e) => {
               props.setParameters({
                 ...props.parameters,
-                subtitleBorderColor: e.target.value,
+                outline_colour: e.target.value,
               });
             }}
           />
           <ParametersInput
             title="字幕字体背景颜色"
-            value={props.parameters.subtitleBgColor}
+            value={props.parameters.back_colour}
             onChange={(e) => {
               props.setParameters({
                 ...props.parameters,
-                subtitleBgColor: e.target.value,
+                back_colour: e.target.value,
               });
             }}
           />

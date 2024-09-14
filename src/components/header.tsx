@@ -55,7 +55,7 @@ function Header() {
       <RightBox>
         <ConversionButton>
           <ConversionIcon src={conversion} alt="conversion" />
-          经典页面
+          经典界面
         </ConversionButton>
         <HeaderImg src="https://avatars.githubusercontent.com/u/52910710?v=4" />
       </RightBox>

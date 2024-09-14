@@ -96,6 +96,7 @@ export type ChangeVideoApi = (params: ChangeVideoApiParams) => Promise<ChangeVid
 
 export type UploadVideoApiParams = {
   file: File
+  video_duration: number
 }
 export type UploadVideoApiData = {
   file: {
@@ -136,6 +137,7 @@ export type CreateLongVideoApiParams = {
   subtitle_font_size: number
   title: string
   y_align: number
+
 }
 
 export type CreateLongVideoApiResult = {
@@ -144,3 +146,42 @@ export type CreateLongVideoApiResult = {
   msg: string
 }
 export type CreateLongVideoApi = (params: CreateLongVideoApiParams) => Promise<CreateLongVideoApiResult>
+
+export type GetLongVideoInfoApiParams = {
+  ID: number
+}
+export type GetLongVideoInfoApiResult = {
+  code: number
+  data: LongVideoListItem
+  msg: string
+}
+
+export type GetLongVideoInfoApi = (params: GetLongVideoInfoApiParams) => Promise<GetLongVideoInfoApiResult>
+
+
+export type CreateSegmentIdApiParams = {
+  fileName: string
+  fileMd5: string
+  chunkTotal: number
+  videoDuration: number
+}
+export type CreateSegmentIdApiData = {
+  ID: number
+  CreatedAt: string
+  UpdatedAt: string
+  FileName: string
+  FileMd5: string
+  FilePath: string
+  ExaFileChunk: null
+  ChunkTotal: number
+  IsFinish: boolean
+  UserID: number
+  R2UploadID: string
+}
+export type CreateSegmentIdApiResult = {
+  code: number
+  data: CreateSegmentIdApiData
+  msg: string
+}
+
+export type CreateSegmentIdApi = (params: CreateSegmentIdApiParams) => Promise<CreateSegmentIdApiResult>

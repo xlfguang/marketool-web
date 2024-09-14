@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import nodata from "@/assets/images/nodata.png";
 export const VideoList = styled.div`
   width: 100%;
   max-width: 1130px;
@@ -48,8 +48,9 @@ export const VideoItemImgBox = styled.div`
 `;
 export const VideoItemImg = styled.img`
   width: 313px;
-  height: 698px;
+  height: 556px;
   border-radius: 16px;
+  object-fit: cover;
   @media (max-width: 768px) {
     width: 100%;
     height: auto;
@@ -92,7 +93,7 @@ export const VideoItemDescription = styled.div`
 `;
 export const VideoItemCaption = styled.div``;
 export const Caption = styled.div`
-  height: calc(698px - 178px);
+  height: calc(556px - 178px);
   padding: 22px 20px 50px;
   font-size: 18px;
   font-weight: 400;
@@ -270,10 +271,12 @@ export const ParametersFormCheck = styled.input`
     background-color: #ff5334;
   }
 `;
-export const ParametersFormCheckLabel = styled.span`
+export const ParametersFormCheckLabel = styled.span<{
+  active: boolean;
+}>`
   font-size: 16px;
   font-weight: 400;
-  color: #ff5334;
+  color: ${(props) => (props.active ? "#ff5334" : "#A5A5A5")};
 `;
 export const ParametersFormButtonBox = styled.div`
   display: flex;
@@ -289,4 +292,12 @@ export const ParametersFormButton = styled.div<{
     ${(props) => (props.type === "submit" ? "#ff5334" : "#A5A5A5")};
   color: ${(props) => (props.type === "submit" ? "#fff" : "#A5A5A5")};
   cursor: pointer;
+`;
+
+export const NoData = styled.div`
+  width: 188px;
+  height: 226px;
+  background: url(${nodata}) no-repeat;
+  background-size: 100% 100%;
+  margin: 0 auto;
 `;

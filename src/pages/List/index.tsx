@@ -1,7 +1,7 @@
 import Main from "@/components/main";
 import { useEffect, useState } from "react";
 import VideoItem from "./components/videoItem";
-import { LoadingPrompts, VideoList } from "./style";
+import { LoadingPrompts, NoData, VideoList } from "./style";
 import { useLocation } from "react-router-dom";
 import { getVideoListApi } from "@/api/apis";
 import { VideoListItem } from "@/api/type";
@@ -48,9 +48,13 @@ function Index() {
           return <VideoItem video={video} key={i} />;
         })}
       </VideoList>
-      <LoadingPrompts>
-        {videoList.length < total ? "加载中..." : "没有更多了"}
-      </LoadingPrompts>
+      {videoList.length ? (
+        <LoadingPrompts>
+          {videoList.length < total ? "加载中..." : "没有更多了"}
+        </LoadingPrompts>
+      ) : (
+        <NoData></NoData>
+      )}
     </Main>
   );
 }

@@ -89,11 +89,11 @@ function VideoItem(props: VideoItemProps) {
   const [formShow, setFormShow] = useState(false);
   const [activeBtn, setActiveBtn] = useState("");
   const video = props.video;
-
   const [title, setTitle] = useState(video.title);
   const [subtitle, setSubtitle] = useState(video.subtitle);
   const [description, setDescription] = useState(video.description);
   const [tag, setTag] = useState(video.tag);
+  const [check, setCheck] = useState(false);
   const download = async () => {
     const response = await fetch(video.videoUrl);
     if (!response.ok) {
@@ -231,9 +231,14 @@ function VideoItem(props: VideoItemProps) {
                 />
                 <ParametersFormBottom>
                   <ParametersFormCheckBox>
-                    <ParametersFormCheck type="checkbox" />
-                    <ParametersFormCheckLabel>
-                      是否同步更新到社交媒体
+                    <ParametersFormCheck
+                      type="checkbox"
+                      onClick={() => {
+                        setCheck(!check);
+                      }}
+                    />
+                    <ParametersFormCheckLabel active={check}>
+                      确认并重新合成
                     </ParametersFormCheckLabel>
                   </ParametersFormCheckBox>
                   <ParametersFormButtonBox>
