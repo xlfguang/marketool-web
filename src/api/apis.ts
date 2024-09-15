@@ -1,5 +1,5 @@
 import Request from './request'
-import { ChangeVideoApi, CreateLongVideoApi, CreateSegmentIdApi, DeleteSegmentCacheApi, GetLongVideoInfoApi, GetLongVideoListApi, GetVideoListApi, UploadSegmentApi, UploadSegmentCompleteApi, UploadVideoApi } from './type'
+import { ChangeVideoApi, CreateLongVideoApi, CreateSegmentIdApi, DeleteSegmentCacheApi, DeleteVideoApi, GetLongVideoInfoApi, GetLongVideoListApi, GetVideoListApi, UploadSegmentApi, UploadSegmentCompleteApi, UploadVideoApi } from './type'
 // 获取长视频的列表接口
 export const getLongVideoListApi: GetLongVideoListApi = (params) => {
   return Request('/api/longShortProduct/getLongShortProductList', 'GET', params)
@@ -81,4 +81,8 @@ export const createLongVideoApi: CreateLongVideoApi = (params) => {
 // 获取长视频最新的信息接口
 export const getLongVideoInfoApi: GetLongVideoInfoApi = (params) => {
   return Request('/api/longShortProduct/findLongShortProduct', 'GET', params)
+}
+// 删除视频的接口
+export const deleteVideoApi: DeleteVideoApi = (params) => {
+  return Request(`/api/video/deleteLongShortVideo?ID=6052`, 'DELETE', params)
 }

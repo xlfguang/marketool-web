@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import VideoItem from "./components/videoItem";
 import { LoadingPrompts, NoData, VideoList } from "./style";
 import { useLocation } from "react-router-dom";
-import { getVideoListApi } from "@/api/apis";
+import { deleteVideoApi, getVideoListApi } from "@/api/apis";
 import { VideoListItem } from "@/api/type";
 function Index() {
   const [videoList, setVideoList] = useState<VideoListItem[]>([]);
@@ -21,6 +21,14 @@ function Index() {
     if (res.code === 0) {
       setVideoList([...videoList, ...res.data.list]);
       setTotal(res.data.total);
+    }
+  };
+  const deleteVideo = (id: number) => {
+    const videoFind = videoList.find((video) => video.ID === id);
+    if (videoFind) {
+      const index = videoList.indexOf(videoFind);
+      videoList.splice(index, 1);
+      setVideoList([...videoList]);
     }
   };
   useEffect(() => {
@@ -45,7 +53,15 @@ function Index() {
     >
       <VideoList>
         {videoList.map((video, i) => {
-          return <VideoItem video={video} key={i} />;
+          return (
+            <VideoItem
+              video={video}
+              key={i}
+              onDelete={(id) => {
+                deleteVideo(id);
+              }}
+            />
+          );
         })}
       </VideoList>
       {videoList.length ? (

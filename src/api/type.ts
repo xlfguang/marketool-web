@@ -228,3 +228,13 @@ export type CreateSegmentIdApiResult = {
 }
 
 export type CreateSegmentIdApi = (params: CreateSegmentIdApiParams) => Promise<CreateSegmentIdApiResult>
+
+export type DeleteVideoApiParams = {
+  ID: number
+}
+export type DeleteVideoApiResult = {
+  code: number
+  data: null
+  msg: string
+}
+export type DeleteVideoApi = (params: DeleteVideoApiParams) => Promise<DeleteVideoApiResult>

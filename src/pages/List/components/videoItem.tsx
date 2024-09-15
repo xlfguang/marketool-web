@@ -35,10 +35,12 @@ import alterIcon from "@/assets/images/alter.png";
 import deleteIcon from "@/assets/images/delete.png";
 import playIcon from "@/assets/images/play-icon.png";
 import { VideoListItem } from "@/api/type";
-import { changeVideoApi, synthesisVideoApi } from "@/api/apis";
+import { changeVideoApi, deleteVideoApi, synthesisVideoApi } from "@/api/apis";
+import { Modal } from "@douyinfe/semi-ui";
 
 interface VideoItemProps {
   video: VideoListItem;
+  onDelete: (id: number) => void;
 }
 const OperateButton = (props: {
   icon: string;
@@ -94,6 +96,7 @@ function VideoItem(props: VideoItemProps) {
   const [description, setDescription] = useState(video.description);
   const [tag, setTag] = useState(video.tag);
   const [check, setCheck] = useState(false);
+  const [visible, setVisible] = useState(false);
   const download = async () => {
     const response = await fetch(video.videoUrl);
     if (!response.ok) {
@@ -127,7 +130,18 @@ function VideoItem(props: VideoItemProps) {
     setFormShow(true);
     setActiveBtn("alter");
   };
-  const deleteVideo = () => {};
+  const deleteVideo = async () => {
+    const res = await deleteVideoApi({
+      ID: video.ID,
+    });
+    console.log(res);
+    if (res.code === 0) {
+      setVisible(false);
+      props.onDelete(video.ID);
+    } else {
+      alert(res.msg);
+    }
+  };
 
   const save = async (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
@@ -255,11 +269,25 @@ function VideoItem(props: VideoItemProps) {
           </OperateButton>
           <OperateButton
             icon={deleteIcon}
-            onClick={deleteVideo}
+            onClick={() => {
+              setVisible(true);
+            }}
             btnText="删除"
           />
         </VideoItemOperate>
       </VideoItemContentBox>
+
+      <Modal
+        title="提示"
+        visible={visible}
+        onOk={deleteVideo}
+        onCancel={() => {
+          setVisible(false);
+        }}
+        closeOnEsc={true}
+      >
+        <p>是否确认删除？</p>
+      </Modal>
     </VideoItemBox>
   );
 }
