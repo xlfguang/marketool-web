@@ -1,5 +1,5 @@
 import Request from './request'
-import { ChangeVideoApi, CreateLongVideoApi, CreateSegmentIdApi, GetLongVideoInfoApi, GetLongVideoListApi, GetVideoListApi, UploadVideoApi } from './type'
+import { ChangeVideoApi, CreateLongVideoApi, CreateSegmentIdApi, DeleteSegmentCacheApi, GetLongVideoInfoApi, GetLongVideoListApi, GetVideoListApi, UploadSegmentApi, UploadSegmentCompleteApi, UploadVideoApi } from './type'
 // 获取长视频的列表接口
 export const getLongVideoListApi: GetLongVideoListApi = (params) => {
   return Request('/api/longShortProduct/getLongShortProductList', 'GET', params)
@@ -40,7 +40,39 @@ export const createSegmentIdApi: CreateSegmentIdApi = (params) => {
   return Request(`/api/fileUploadAndDownload/findFile`, 'GET', params)
 }
 
+// 切片上传的接口
+export const uploadSegmentApi: UploadSegmentApi = (params) => {
+  return new Promise((resolve, reject) => {
+    const token = localStorage.getItem('token')
+    const headers: HeadersInit = {
+      'X-Token': token ? `${token}` : '',
+      'x-user-id': '48'
+    };
+    const formData = new FormData()
+    formData.append('file', params.file)
+    formData.append('chunkNumber', `${params.chunkNumber}`)
+    formData.append('fileName', params.fileName)
+    formData.append('chunkTotal', `${params.chunkTotal}`)
+    formData.append('fileMd5', params.fileMd5)
+    formData.append('chunkMd5', params.chunkMd5)
+    fetch(`https://aimarketool-fc.douwantech.com/api/fileUploadAndDownload/breakpointContinue`, {
+      method: 'POST',
+      headers,
+      body: formData
+    }).then(res => {
+      res.json().then(resolve).catch(reject)
+    })
+  })
+}
 
+// 分段上传完成的接口
+export const uploadSegmentCompleteApi: UploadSegmentCompleteApi = (params) => {
+  return Request(`/api/fileUploadAndDownload/breakpointContinueFinish?fileName=${params.fileName}&fileMd5=${params.fileMd5}&videoDuration=${params.videoDuration}`, 'POST', params)
+}
+// 分段上传删除缓存的接口
+export const deleteSegmentCacheApi: DeleteSegmentCacheApi = (params) => {
+  return Request(`/api/fileUploadAndDownload/removeChunk`, 'POST', params)
+}
 
 // 创建长视频的接口
 export const createLongVideoApi: CreateLongVideoApi = (params) => {

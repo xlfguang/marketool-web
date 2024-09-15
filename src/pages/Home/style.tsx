@@ -82,3 +82,8 @@ export const VideoList = styled.div`
   margin: 0 auto;
   gap: 32px;
 `;
+export const PaginationBox = styled.div`
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+`;

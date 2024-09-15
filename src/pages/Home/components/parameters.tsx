@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 interface Parameters {
-  font_size: string;
-  line_space: string;
-  y_align: string;
+  font_size: number;
+  line_space: number;
+  y_align: number;
   font_color: string;
   border_color: string;
-  subtitle_font_size: string;
-  margin_v: string;
+  subtitle_font_size: number;
+  margin_v: number;
   primary_colour: string;
   outline_colour: string;
   back_colour: string;
@@ -99,31 +99,31 @@ function AdvancedParameters(props: ParametersProps) {
         <ParametersForm>
           <ParametersInput
             title="标题字体大小"
-            value={props.parameters.font_size}
+            value={String(props.parameters.font_size)}
             onChange={(e) => {
               props.setParameters({
                 ...props.parameters,
-                font_size: e.target.value,
+                font_size: Number(e.target.value),
               });
             }}
           />
           <ParametersInput
             title="标题行高"
-            value={props.parameters.line_space}
+            value={String(props.parameters.line_space)}
             onChange={(e) => {
               props.setParameters({
                 ...props.parameters,
-                line_space: e.target.value,
+                line_space: Number(e.target.value),
               });
             }}
           />
           <ParametersInput
             title="标题Y轴间距"
-            value={props.parameters.y_align}
+            value={String(props.parameters.y_align)}
             onChange={(e) => {
               props.setParameters({
                 ...props.parameters,
-                y_align: e.target.value,
+                y_align: Number(e.target.value),
               });
             }}
           />
@@ -149,21 +149,21 @@ function AdvancedParameters(props: ParametersProps) {
           />
           <ParametersInput
             title="字幕字体大小"
-            value={props.parameters.subtitle_font_size}
+            value={String(props.parameters.subtitle_font_size)}
             onChange={(e) => {
               props.setParameters({
                 ...props.parameters,
-                subtitle_font_size: e.target.value,
+                subtitle_font_size: Number(e.target.value),
               });
             }}
           />
           <ParametersInput
             title="字幕间距"
-            value={props.parameters.margin_v}
+            value={String(props.parameters.margin_v)}
             onChange={(e) => {
               props.setParameters({
                 ...props.parameters,
-                margin_v: e.target.value,
+                margin_v: Number(e.target.value),
               });
             }}
           />

@@ -119,6 +119,38 @@ export type UploadVideoApiResult = {
 }
 export type UploadVideoApi = (params: UploadVideoApiParams) => Promise<UploadVideoApiResult>
 
+
+export type UploadSegmentApiParams = {
+  file: Blob
+  chunkNumber: number
+  fileName: string
+  chunkTotal: number
+  fileMd5: string
+  chunkMd5: string
+}
+export type UploadSegmentApiData = object
+export type UploadSegmentApiResult = {
+  code: number
+  data: UploadSegmentApiData
+  msg: string
+}
+export type UploadSegmentApi = (params: UploadSegmentApiParams) => Promise<UploadSegmentApiResult>
+
+export type UploadSegmentCompleteApiParams = {
+  fileName: string
+  fileMd5: string
+  videoDuration: number
+}
+export type UploadSegmentCompleteApiData = {
+  filePath: string
+}
+export type UploadSegmentCompleteApiResult = {
+  code: number
+  data: UploadSegmentCompleteApiData
+  msg: string
+}
+export type UploadSegmentCompleteApi = (params: UploadSegmentCompleteApiParams) => Promise<UploadSegmentCompleteApiResult>
+
 export type CreateLongVideoApiParams = {
   back_colour: string
   border_color: string
@@ -146,6 +178,17 @@ export type CreateLongVideoApiResult = {
   msg: string
 }
 export type CreateLongVideoApi = (params: CreateLongVideoApiParams) => Promise<CreateLongVideoApiResult>
+
+export type DeleteSegmentCacheApiParams = {
+  "fileMd5": string,
+  "filePath": string
+}
+export type DeleteSegmentCacheApiResult = {
+  code: number
+  data: object
+  msg: string
+}
+export type DeleteSegmentCacheApi = (params: DeleteSegmentCacheApiParams) => Promise<DeleteSegmentCacheApiResult>
 
 export type GetLongVideoInfoApiParams = {
   ID: number
